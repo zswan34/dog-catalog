@@ -15,7 +15,6 @@
     "@types/react-router-dom": "^5.3.3",
     "fuse.js": "^6.5.3",
     "fuzzysearch": "^1.0.3",
-    "i": "^0.3.7",
     "lodash": "^4.17.21",
     "npm": "^8.6.0",
     "react": "^18.0.0",

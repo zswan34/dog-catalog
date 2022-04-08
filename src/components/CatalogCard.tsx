@@ -1,4 +1,4 @@
-import { Flex, View, Image, Divider, Text} from "@adobe/react-spectrum"
+import React, { Flex, View, Image, Divider, Text} from "@adobe/react-spectrum"
 import { useNavigate } from "react-router"
 
 type CatalogCardProps = { 
@@ -6,10 +6,10 @@ type CatalogCardProps = {
 }
 
 const CatalogCard = ({card}: CatalogCardProps) => {
-    const navigate = useNavigate();
+    const navivate = useNavigate();
 
     const handleClick = (id: number) => {
-        navigate('/breeds/' + id);
+        navivate('/breeds/' + id);
     }
 
     return (

@@ -1,13 +1,13 @@
-import { SetStateAction, useEffect, useState } from "react";
-import { ActionButton, Button, ButtonGroup, Content, Dialog, DialogTrigger, Divider, Flex, Grid, Heading, IllustratedMessage, SearchField, Text, View } from "@adobe/react-spectrum";
+import { Content, Divider, Flex, Grid, Heading, IllustratedMessage, SearchField, Text, View } from "@adobe/react-spectrum";
 import CatalogCard from "./CatalogCard";
 import {isEmpty} from 'lodash';
 import Fuse from "fuse.js";
+import CatalogCompareFields from "./CatalogComapreFields";
+import { SetStateAction, useEffect, useState } from "react";
 
 const Catalog = () => {
     const [data, setData] = useState<any[]>([])
     const [text, setText] = useState<string>("");
-    const [dialogOpen, setDialogOpen] = useState<boolean>(false);
     const [searchData, setSearchData] = useState<any[]>([]);
 
     useEffect(() => {
@@ -46,35 +46,29 @@ const Catalog = () => {
             'content'
             ]}
             columns={['1fr']}
-            rows={['size-2000', 'auto']}
+            rows={['auto', 'auto']}
             minHeight="100vh"
             justifyContent="center"
             gap="size-100">
                 <View gridArea="header">
-                    <Flex direction={'column'} justifyContent='center' alignItems='center' height={'100%'} gap="size-200">
+                    <Flex direction={'column'} marginTop="size-10" marginBottom={"size-500"} justifyContent='center' alignItems='center' height={'100%'} wrap gap="size-200">
                         <View>
-                            <SearchField aria-label="Search" value={text} onChange={handleSearch} placeholder="Search Breeds" />
-                        </View>
-                        <View>
-                        <DialogTrigger type="modal">
-                            <ActionButton>Checkout</ActionButton>
-                            {(close) => (
-                                <Dialog>
-                                <Heading>Confirm checkout?</Heading>
-                                <Divider />
-                                <Content>
+                            <Flex direction={'column'} alignItems={'center'}>
+                                <View>
+                                    <SearchField minWidth={300} aria-label="Search" value={text} onChange={handleSearch} placeholder="Search Breeds" />
+                                </View>
+                                <View>
                                     <Text>
-                                    You have 5 items in your cart. Proceed to checkout?
+                                        <h4>Dog Breeds: {searchData.length}</h4>
                                     </Text>
-                                </Content>
-                                <ButtonGroup>
-                                    <Button variant="secondary" onPress={close}>Cancel</Button>
-                                    <Button variant="cta" onPress={close} autoFocus>Confirm</Button>
-                                </ButtonGroup>
-                                </Dialog>
-                            )}
-                            </DialogTrigger>
+                                </View>
+                            </Flex>
                         </View>
+                        <Divider height={'size-10'} />
+                        <View>
+                            <CatalogCompareFields data={data} />
+                        </View>
+                        <Divider height={'size-10'} />
                     </Flex>
                 </View>
                 <View 

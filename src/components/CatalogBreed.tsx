@@ -1,17 +1,17 @@
 import { Flex, Grid, Text, View, Image, IllustratedMessage, Heading } from "@adobe/react-spectrum";
 import { isEmpty } from "lodash";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 
 const CatalogBreed = () => {
-    const params = useParams();
+    const params = useParams<any>();
     const [data, setData] = useState<any>({})
     const [imageSrc, setImageSrc] = useState<string>('');
     const [error, setError] = useState<boolean>(false);
 
     useEffect(() => {
-        const fetchBreed =async () => {
+        const fetchBreedData =async () => {
             try {
                 let response = await fetch(`https://api.thedogapi.com/v1/breeds/${params.breedId}`);
                 const data = await response.json();
@@ -24,8 +24,8 @@ const CatalogBreed = () => {
             }
         }
 
-        fetchBreed();
-    }, []);
+        fetchBreedData();
+    }, [params]);
 
     return (
         <Grid
