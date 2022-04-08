@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
-import { defaultTheme, Provider, Button, Flex, Grid, View } from '@adobe/react-spectrum';
+import { defaultTheme, Provider } from '@adobe/react-spectrum';
 import Catalog from './components/Catalog';
 
 import {

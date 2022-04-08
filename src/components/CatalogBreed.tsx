@@ -15,7 +15,6 @@ const CatalogBreed = () => {
           const data = await response.json();
           response = await fetch(`https://api.thedogapi.com/v1/images/${data.reference_image_id}`)
           const imageSrc = await response.json();
-          console.log(data);
           setData(data);
           setImageSrc(imageSrc.url);
         }
