@@ -21,6 +21,7 @@ const CatalogCompare = () => {
                 const imageSrc = await response.json();
                 setBreedOne(data);
                 setImageSrcOne(imageSrc.url);
+                setError(false);
             } catch(err) {
                 setError(true)
             }
@@ -68,7 +69,7 @@ const CatalogCompare = () => {
             <View paddingX="size-500" gridArea={'content'}>
                 {(isEmpty(breedOne) || isEmpty(breedTwo)) ? (
                     <>
-                        {error ? (
+                        {!error ? (
                             <Flex direction={'row'} justifyContent='center' alignContent={'center'}>
                                 <View>
                                     <IllustratedMessage>

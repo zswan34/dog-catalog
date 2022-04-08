@@ -19,6 +19,7 @@ const CatalogBreed = () => {
                 const imageSrc = await response.json();
                 setData(data);
                 setImageSrc(imageSrc.url);
+                setError(false);
             } catch(err) {
                 setError(true)
             }
@@ -52,7 +53,7 @@ const CatalogBreed = () => {
                 <View paddingX="size-500" gridArea={'content'}>
                     {isEmpty(data) ? (
                         <>
-                            {error ? (
+                            {!error ? (
                                 <Flex direction={'row'} justifyContent='center' alignContent={'center'}>
                                     <View>
                                         <IllustratedMessage>
