@@ -1,13 +1,13 @@
 import { SetStateAction, useEffect, useState } from "react";
-import { Flex, Grid, Text, TextField, View } from "@adobe/react-spectrum";
+import { ActionButton, Button, ButtonGroup, Content, Dialog, DialogTrigger, Divider, Flex, Grid, Heading, IllustratedMessage, SearchField, Text, View } from "@adobe/react-spectrum";
 import CatalogCard from "./CatalogCard";
 import {isEmpty} from 'lodash';
 import Fuse from "fuse.js";
 
 const Catalog = () => {
-
     const [data, setData] = useState<any[]>([])
     const [text, setText] = useState<string>("");
+    const [dialogOpen, setDialogOpen] = useState<boolean>(false);
     const [searchData, setSearchData] = useState<any[]>([]);
 
     useEffect(() => {
@@ -51,8 +51,30 @@ const Catalog = () => {
             justifyContent="center"
             gap="size-100">
                 <View gridArea="header">
-                    <Flex height={'100%'} direction={'row'} justifyContent='center' alignItems={'center'}>
-                            <TextField aria-label="Search" value={text} onChange={handleSearch} placeholder="Search Breeds" />
+                    <Flex direction={'column'} justifyContent='center' alignItems='center' height={'100%'} gap="size-200">
+                        <View>
+                            <SearchField aria-label="Search" value={text} onChange={handleSearch} placeholder="Search Breeds" />
+                        </View>
+                        <View>
+                        <DialogTrigger type="modal">
+                            <ActionButton>Checkout</ActionButton>
+                            {(close) => (
+                                <Dialog>
+                                <Heading>Confirm checkout?</Heading>
+                                <Divider />
+                                <Content>
+                                    <Text>
+                                    You have 5 items in your cart. Proceed to checkout?
+                                    </Text>
+                                </Content>
+                                <ButtonGroup>
+                                    <Button variant="secondary" onPress={close}>Cancel</Button>
+                                    <Button variant="cta" onPress={close} autoFocus>Confirm</Button>
+                                </ButtonGroup>
+                                </Dialog>
+                            )}
+                            </DialogTrigger>
+                        </View>
                     </Flex>
                 </View>
                 <View 
@@ -62,9 +84,9 @@ const Catalog = () => {
                         {isEmpty(data) ? (
                             <Flex direction={'row'} justifyContent='center' alignContent={'center'}>
                                 <View>
-                                    <Text>
-                                        <h1>Loading...</h1>
-                                        </Text>
+                                    <IllustratedMessage>
+                                        <Heading>Loading...</Heading>
+                                    </IllustratedMessage>
                                 </View>
                             </Flex>
                         ) : (
@@ -73,7 +95,10 @@ const Catalog = () => {
                                 (
                                     <Flex direction={'row'} justifyContent='center' alignContent={'center'}>
                                         <View>
-                                            <Text><h1>No Results</h1></Text>
+                                            <IllustratedMessage>
+                                                <Heading>No results</Heading>
+                                                <Content>Try another search</Content>
+                                            </IllustratedMessage>
                                         </View>
                                     </Flex>
                                 ) : (

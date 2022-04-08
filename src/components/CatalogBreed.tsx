@@ -1,4 +1,4 @@
-import { Flex, Grid, Text, View, Image } from "@adobe/react-spectrum";
+import { Flex, Grid, Text, View, Image, IllustratedMessage, Heading } from "@adobe/react-spectrum";
 import { isEmpty } from "lodash";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
@@ -8,15 +8,20 @@ const CatalogBreed = () => {
     const params = useParams();
     const [data, setData] = useState<any>({})
     const [imageSrc, setImageSrc] = useState<string>('');
+    const [error, setError] = useState<boolean>(false);
 
     useEffect(() => {
         const fetchBreed =async () => {
-          let response = await fetch(`https://api.thedogapi.com/v1/breeds/${params.breedId}`);
-          const data = await response.json();
-          response = await fetch(`https://api.thedogapi.com/v1/images/${data.reference_image_id}`)
-          const imageSrc = await response.json();
-          setData(data);
-          setImageSrc(imageSrc.url);
+            try {
+                let response = await fetch(`https://api.thedogapi.com/v1/breeds/${params.breedId}`);
+                const data = await response.json();
+                response = await fetch(`https://api.thedogapi.com/v1/images/${data.reference_image_id}`)
+                const imageSrc = await response.json();
+                setData(data);
+                setImageSrc(imageSrc.url);
+            } catch(err) {
+                setError(true)
+            }
         }
 
         fetchBreed();
@@ -46,13 +51,26 @@ const CatalogBreed = () => {
                 </View>
                 <View paddingX="size-500" gridArea={'content'}>
                     {isEmpty(data) ? (
-                        <Flex direction={'row'} justifyContent='center' alignContent={'center'}>
-                            <View>
-                                <Text>
-                                    <h1>Loading...</h1>
-                                    </Text>
-                            </View>
-                        </Flex>
+                        <>
+                            {error ? (
+                                <Flex direction={'row'} justifyContent='center' alignContent={'center'}>
+                                    <View>
+                                        <IllustratedMessage>
+                                            <Heading>Loading...</Heading>
+                                        </IllustratedMessage>
+                                    </View>
+                                </Flex>
+                            ) : (
+                                <Flex direction={'row'} justifyContent='center' alignContent={'center'}>
+                                    <View>
+                                        <IllustratedMessage>
+                                            <Heading>Failed to load data.</Heading>
+                                        </IllustratedMessage>
+                                    </View>
+                                </Flex>
+                            )}
+                        </>
+
                     ) : (
                         <Flex direction={'row'} alignContent={'center'} justifyContent='center' wrap gap="size-500">
                             <View>

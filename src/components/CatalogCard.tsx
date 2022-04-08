@@ -15,22 +15,22 @@ const CatalogCard = ({card}: CatalogCardProps) => {
     return (
         <Flex direction={'column'}>
             <div
+            style={{cursor: 'pointer'}}
             onClick={() => handleClick(card.id)}
-             style={{
-                cursor: 'pointer',
-            }} >
-                <View borderRadius={'medium'} height="auto" width="size-3000">
+            >
+            
+                <View position={'relative'} borderRadius={'medium'} height="auto" width="size-3000">
                     <Image UNSAFE_style={{borderTopLeftRadius: '5px', borderTopRightRadius: '5px', width: '100%'}} 
                     src={card.image.url} objectFit="cover" alt={card.name} />
                 </View>
                 <View 
+                position={'relative'}
                 backgroundColor={'static-white'}
                 UNSAFE_style={{
                     color: '#333',
                     borderBottomLeftRadius: '5px',
                     borderBottomRightRadius: '5px'
                     }}
-                    marginBottom="size-100"
                 >
                     <Flex direction={'column'} justifyContent='center' marginStart={'size-100'}>
                         <View>
